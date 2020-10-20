@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-light">
+            <div class="container">
+                <a href="home.html" class="navbar-brand">
+                    <img src="images/resursi/logo_1.jpg" alt="">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="home.html" class="nav-link">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="aboutus.html" class="nav-link">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="destinations.html" class="nav-link">Destinations</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="booking.html" class="nav-link">Booking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="gallery.html" class="nav-link active">Gallery</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="blog.html" class="nav-link">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="contact.html" class="nav-link">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="upload mb-4" style="min-height: 40vh;">
+            <div class="container">
+                <div class="row mx-auto py-4" id="uploadrow" style="width: 40%;">
+                    <div class="col-12 py-4">
+                        <h3>UPLOAD PHOTO AND WIN A PRIZE</h3>
+                        <p> Lorem ipsum dolor sit amet consectet architecto eveniet repellat. Rem
+                            laudantium
+                            aperiam in
+                            eli.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="container" style="position: relative;">
+                <div class="image-upload">
+                    <label for="file1">
+                        <img src="images/resursi/upload_photo.png" />
+                    </label>
+                    <input id="file1" type="file" onchange="ucitajSliku()" accept="image/*" />
+                </div>
+                <div class="row my-2 mx-auto" id="galerija">
+                    <img class="col-lg-3 col-md-6 my-2" src="images/resursi/paris.jpg" alt="">
+                    <img class="col-lg-3 col-md-6 my-2" src="images/resursi/rome.jpg" alt="">
+                    <img class="col-lg-3 col-md-6 my-2" src="images/resursi/venice.jpg" alt="">
+                    <img class="col-lg-3 col-md-6 my-2" src="images/resursi/quiske.jpg" alt="">
+                    <img class="col-lg-3 col-md-6 my-2" src="images/resursi/thailand.jpg" alt="">
+                    <img class="col-lg-3 col-md-6 my-2" src="images/resursi/taj_mahal.jpg" alt="">
+                    <img class="col-lg-3 col-md-6 my-2" src="images/resursi/london.jpeg" alt="">
+                    <img class="col-lg-3 col-md-6 my-2" src="images/resursi/rio.jpg" alt="">
+                    <img class="col-lg-3 col-md-6 my-2" src="images/resursi/athen.jpg" alt="">
+                    <img class="col-lg-3 col-md-6 my-2" src="images/resursi/havana.jpg" alt="">
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <ul>
+                        <li>&copy;SmartInIt 2020</li>
+                        <li>
+                            <a href="home.html">Home</a>
+                        </li>
+                        <li>
+                            <a href="#">Privacy Policy</a>
+                        </li>
+                        <li>
+                            <a href="contact.html">Contact Support</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        function ucitajSliku() {
+            var fajlElem = document.getElementById('file1');
+            if (fajlElem.files.length != 0 && fajlElem.files[0].type.match(/image.*/)) {
+                var reader = new FileReader();
+                reader.readAsDataURL(fajlElem.files[0]);
+                reader.onload = function (e) {
+                    var elem = document.createElement("img");
+                    elem.src = e.target.result;
+                    elem.classList.add("col-lg-3", "col-md-6", "my-2");
+                    document.getElementById('galerija').appendChild(elem);
+                }
+                reader.onerror = function (e) {
+                    alert('Ne moze da se ucita slika');
+                }
+            } else {
+                alert("Odaberite sliku");
+            }
+        }
+    </script>
+</body>
+
+</html>

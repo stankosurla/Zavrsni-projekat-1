@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossOrigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-light">
+            <div class="container">
+                <a href="home.html" class="navbar-brand">
+                    <img src="images/resursi/logo_1.jpg" alt="">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="home.html" class="nav-link ">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="aboutus.html" class="nav-link">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="destinations.html" class="nav-link">Destinations</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="booking.html" class="nav-link active">Booking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="gallery.html" class="nav-link">Gallery</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="blog.html" class="nav-link">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="contact.html" class="nav-link">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 px-0">
+                        <img src="images/Travel-GettyImages.jpg" style="max-height: 50vh;" class="w-100" alt="">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="container mt-4 mb-4" id="destCont">
+            <div class="row">
+                <div class="col">
+                    <table id="tabelaDest" class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Destination</th>
+                                <th>Starting date</th>
+                                <th>Duration</th>
+                                <th>Price</th>
+                                <th>Details</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <button type="button"
+                        style="color: white; background-color: #f2a463; width: 30%; float: right; border: none; margin: 1em 0; padding: 0.5em;"
+                        onclick="showRes()">View
+                        Reservations</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-4 mb-4" id="resCont" style="display: none;">
+            <div class="row">
+                <div class="col">
+                    <table id="tabelaReserve" class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Surname</th>
+                                <th>Email</th>
+                                <th>Destination</th>
+                                <th>Price</th>
+                                <th>Note</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalUnos" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Make Reservation</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h6 id="mDestination"></h6><br>
+                        <h6 id="mPrice"></h6><br>
+                        <form id="forma" role="form">
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                <input type="text" name="name" id="name" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="surname">Surname:</label>
+                                <input type="text" name="surname" id="surname" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="mejl">Email adress:</label>
+                                <input type="email" name="mejl" id="mejl" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="jmbg">JMBG:</label>
+                                <input type="text" name="jmbg" id="jmbg" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="note">Note:</label>
+                                <textarea name="note" id="note" class="form-control"></textarea>
+                            </div>
+                            <input type="submit" id="send" value="Send" class="btn btn-outline-secondary"
+                                style="border-color: #f2a463; float: right;">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="container-fluid">
+            <div class="row text-center">
+                <div class="col-12">
+                    <ul>
+                        <li>&copy;SmartInIt 2020</li>
+                        <li>
+                            <a href="home.html">Home</a>
+                        </li>
+                        <li>
+                            <a href="#">Privacy Policy</a>
+                        </li>
+                        <li>
+                            <a href="contact.html">Contact Support</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        $(document).ready(function () {
+            var get = $.ajax({
+                type: "GET",
+                url: "http://localhost:3000/destinations"
+            });
+            get.done(function (podaci) {
+                $.each(podaci, function (i, podatak) {
+                    $("#tabelaDest tbody").append('<tr><td>' + podatak.destination + '</td><td>'
+                        + podatak.startingDate + '</td><td>' + podatak.duration + '</td><td>'
+                        + podatak.price + ' €' + '</td><td><button id="' +
+                        podatak.id + '" class="btn btn-outline-secondary details" style="border-color: #f2a463;">View details</button></td><td><button id="' +
+                        podatak.id + '" class="btn btn-outline-secondary reserve" style="border-color: #f2a463;">Make reservation</button></td></tr>');
+                });
+                $("#tabelaDest").dataTable();
+            });
+            get.fail(function (podaci) {
+                alert(podaci.statusText);
+            });
+        });
+        $(document).ready(function () {
+            var get1 = $.ajax({
+                type: "GET",
+                url: "http://localhost:3000/reservations"
+            });
+            get1.done(function (podaci) {
+                $.each(podaci, function (i, podatak) {
+                    $("#tabelaReserve tbody").append('<tr><td>' + podatak.name + '</td><td>'
+                        + podatak.surname + '</td><td>' + podatak.mejl + '</td><td>' + podatak.destination + '</td><td>'
+                        + podatak.price + '</td><td>' + podatak.note + '</td><td><button id="' +
+                        podatak.id + '" class="btn btn-outline-secondary change" style="border-color: #f2a463;">Change details</button></td><td><button id="' +
+                        podatak.id + '" class="btn btn-outline-secondary remove" style="border-color: #f2a463;">Delete reservation</button></td></tr>');
+                });
+                $("#tabelaReserve").dataTable();
+            });
+            get1.fail(function (podaci) {
+                alert(podaci.statusText);
+            });
+        });
+        $(document).ready(function () {
+            $("#tabelaDest tbody").on('click', 'button', function () {
+                if ($(this).hasClass("details")) {
+                    alert('View details!');
+                } else if ($(this).hasClass("reserve")) {
+                    var tr = this.parentNode.parentNode;
+                    document.getElementById("mDestination").innerHTML = tr.cells[0].childNodes[0].data;
+                    document.getElementById("mPrice").innerHTML = tr.cells[3].childNodes[0].data;
+                    $("#modalUnos").modal('toggle');
+
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            $("#forma").validate({
+                rules: {
+                    name: {
+                        required: true,
+                        minlength: 3
+                    },
+                    surname: {
+                        required: true,
+                        minlength: 3
+                    },
+                    mejl: "required",
+                    jmbg: {
+                        required: true,
+                        minlength: 13,
+                        maxlength: 13,
+                        amount: {
+                            required: true,
+                            digits: true
+                        }
+                    }
+                },
+                messages: {
+                    name: {
+                        required: "Unesite vase ime",
+                        minlength: "Ime mora da ima bar 3 karaktera"
+                    },
+                    surname: {
+                        required: "Unesite vase ime",
+                        minlength: "Ime mora da ima bar 3 karaktera"
+                    },
+                    mejl: "Unesite validan email",
+                    jmbg: {
+                        required: "Unesite jmbg",
+                        minlength: "Mora imati tacno 13 cifara",
+                        maxlength: "Mora imati tacno 13 cifara",
+                        amount: "Morate uneti samo brojeve"
+                    }
+                },
+                submitHandler: function () {
+                    var unesenoIme = $("#name").val();
+                    var unesenoPrezime = $("#surname").val();
+                    var uneseniMail = $("#mejl").val();
+                    var uneseniJmbg = $("jmgb").val();
+                    var uneseniNote = $("#note").val();
+                    var unos = { name: unesenoIme, surname: unesenoPrezime, mejl: uneseniMail, jmbg: uneseniJmbg, note: uneseniNote };
+
+                    var zahtev = $.ajax({
+                        type: "POST",
+                        url: "http://localhost:3000/reservations",
+                        data: unos,
+                        success: function (noviPodatak) {
+                            $("#tabelaReserve tbody").append('<tr><td>' + noviPodatak.name + '</td><td>'
+                                + noviPodatak.surname + '</td><td>' + noviPodatak.mejl + '</td><td>'
+                                + noviPodatak.jmbg + '</td><td>' + noviPodatak.note + '</td></tr>');
+                            /* <td><button id="' +
+                            noviPodatak.id + '" class="btn btn-outline-secondary change" style="border-color: #f2a463;">Change Reservation</button></td><td><button id="' +
+                            noviPodatak.id + '" class="btn btn-outline-secondary delete" style="border-color: #f2a463;">Delete reservation</button></td> */
+
+                        },
+                        error: function () {
+                            alert("error");
+                        }
+                    });
+
+
+                    /*  zahtev.done(function (podaci) {
+                         $("#tabelaReserve tbody").empty();
+                         $.each(podaci, function (i, podatak) {
+                             $("#tabelaReserve tbody").append('<tr><td>' + podatak.name + '</td><td>'
+                                 + podatak.surname + '</td><td>' + podatak.mejl + '</td><td>'
+                                 + podatak.destination + '</td><td>' + podatak.price + '</td><td>' + podatak.note + '</td><td><button id="' +
+                                 podatak.id + '" class="btn btn-outline-secondary change" style="border-color: #f2a463;">Change Reservation</button></td><td><button id="' +
+                                 podatak.id + '" class="btn btn-outline-secondary delete" style="border-color: #f2a463;">Delete reservation</button></td></tr>');
+                         });
+                         $("#tabelaReserve").dataTable();
+                     }); */
+                    /* zahtev.fail(function (podaci) {
+                        console.log(podaci.status + ":" + podaci.statusText);
+                    }); */
+                    /* 
+
+
+                    $('#modalUnos').modal('toggle');
+
+                    $('forma').trigger('reset'); */
+                    /*  success: function (podatak) {
+                         var get = $.ajax({
+                             type: "GET",
+                             url: "http://localhost:3000/reservations"
+                         });
+                         get.done(function (podaci) {
+                             $("#tabelaReserve tbody").empty();
+                             $.each(podaci, function (i, podatak) {
+                                 $("#tabelaReserve tbody").append('<tr><td>' + podatak.name + '</td><td>'
+                                     + podatak.surname + '</td><td>' + podatak.mejl + '</td><td>'
+                                     + podatak.destination + '</td><td>' + podatak.price + '</td><td>' + podatak.note + '</td><td><button id="' +
+                                     podatak.id + '" class="btn btn-outline-secondary change" style="border-color: #f2a463;">Change Reservation</button></td><td><button id="' +
+                                     podatak.id + '" class="btn btn-outline-secondary delete" style="border-color: #f2a463;">Delete reservation</button></td></tr>');
+                             });
+                             $("#tabelaReserve").dataTable();
+                         });
+                         get.fail(function (podaci) {
+                             alert(podaci.statusText);
+                         });
+                     }
+                 }); */
+                    // $('#modalUnos').modal('toggle');
+                    ///////////////////////////////////////////////////////////////////////
+                    //  $('forma').trigger('reset');
+
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            $("#tabelaReserve tbody").on('click', 'button', function () {
+                if ($(this).hasClass("remove")) {
+                    $.ajax({
+                        url: "localhost:3000/reservations" + $(this).attr("id"),
+                        type: 'DELETE',
+                        dataType: 'json',
+                        success: function () {
+                            console.log("Obrisano");
+                        },
+                        error: alert("Neuspelo brisanje")
+                    });
+                    $(this).parent().parent().remove();
+                }
+            });
+        });
+
+        function showRes() {
+            $('#destCont').hide();
+            $('#resCont').show();
+        }       
+    </script>
+</body>
+
+</html>
