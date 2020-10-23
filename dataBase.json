@@ -45,11 +45,31 @@
   ],
   "reservations": [
     {
-      "name": "Peca",
-      "surname": "Sesum",
-      "mejl": "sesumsurla@yahoo.com",
-      "note": "fgadgf",
+      "name": "Petar",
+      "surname": "Petrovic",
+      "mejl": "petarpetrovic@gmail.com",
+      "destination": "London",
+      "price": 950,
+      "note": "I want to see both old and new",
       "id": 1
+    },
+    {
+      "name": "Nikola",
+      "surname": "Nikolic",
+      "mejl": "nikolanikolic@gmail.com",
+      "destination": "Venice",
+      "price": 550,
+      "note": "Tour on gondolas",
+      "id": 2
+    },
+    {
+      "name": "Jovana",
+      "surname": "Jovanovic",
+      "mejl": "jovanajovanovic@gmail.com",
+      "destination": "Paris",
+      "price": 750,
+      "note": "Eiffel Tower",
+      "id": 3
     }
   ]
 }
