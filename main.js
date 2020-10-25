@@ -39,7 +39,6 @@ function commenting() {
     iDiv.setAttribute("style", "margin: 1em 0; padding: 0.5em 0;");
     commentPrikaz.appendChild(iDiv);
 
-    /*  var newSvg = commentPrikaz.append("svg"); */
     var newSvg = `<svg width="3em" height="3em" style="color: #f2a463;" margin-bottom: 2em; viewBox="0 0 16 16"
         class="bi bi-person-circle" fill="currentColor"
         xmlns="http://www.w3.org/2000/svg">
@@ -56,10 +55,7 @@ function commenting() {
     console.log(newDiv);
     iDiv.innerHTML += newSvg;
     iDiv.appendChild(newDiv);
-    /* commentPrikaz.outerHTML += newSvg;
-    commentPrikaz.append(areaComment); */
-    /* newSvg.attr("width", "3em").attr("height", "3em").style("color", "#f2a463") */
-    /* noviDiv.appendChild(areaComment); */
+
 }
 
 

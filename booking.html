@@ -22,6 +22,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+    <style>
+        #forma label.error,
+        #forma input.submit {
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
@@ -114,6 +120,7 @@
                         </thead>
                         <tbody></tbody>
                     </table>
+                    <h4 style="float: right;">Ukupan iznos: <span id="ukupanIznosRezervacija"></span>€</h4>
                 </div>
             </div>
         </div>
@@ -216,7 +223,7 @@
                         + podatak.startingDate + '</td><td>' + podatak.duration + '</td><td>'
                         + podatak.price + ' €' + '</td><td><button id="' +
                         podatak.id + '" class="btn btn-outline-secondary details" style="border-color: #f2a463;">View details</button></td><td><button id="' +
-                        podatak.id + '" class="btn btn-outline-secondary reserve" style="border-color: #f2a463;">Make reservation</button></td></tr>');
+                        podatak.id + '" class="btn btn-outline-secondary reserve" data-dismiss="modal" style="border-color: #f2a463;">Make reservation</button></td></tr>');
                 });
                 $("#tabelaDest").dataTable();
             });
@@ -226,6 +233,7 @@
         });
         //Get reservations
         $(document).ready(function () {
+            var ukupanIznos = 0;
             var get1 = $.ajax({
                 type: "GET",
                 url: "http://localhost:3000/reservations"
@@ -235,9 +243,13 @@
                     $("#tabelaReserve tbody").append('<tr><td>' + podatak.name + '</td><td>'
                         + podatak.surname + '</td><td>' + podatak.mejl + '</td><td>' + podatak.destination + '</td><td>'
                         + podatak.price + ' €' + '</td><td>' + podatak.note + '</td><td><button id="' +
-                        podatak.id + '" class="btn btn-outline-secondary change" style="border-color: #f2a463;">Change details</button></td><td><button id="' +
+                        podatak.id + '" class="btn btn-outline-secondary change" style="border-color: #f2a463;">Change reservation</button></td><td><button id="' +
                         podatak.id + '" class="btn btn-outline-secondary remove" style="border-color: #f2a463;">Delete reservation</button></td></tr>');
+
+                    ukupanIznos += parseInt(podatak.price);
+                    return ukupanIznos;
                 });
+                $("#ukupanIznosRezervacija").append(ukupanIznos);
                 $('#tabelaReserve').dataTable({
                     "paging": false,
                     "bFilter": false,
@@ -248,7 +260,6 @@
                 alert(podaci.statusText);
             });
         });
-        //
         $(document).ready(function () {
             $("#tabelaDest tbody").on('click', 'button', function () {
                 if ($(this).hasClass("details")) {
@@ -270,8 +281,11 @@
                     $("#modalPrikaz").modal('toggle');
                 } else if ($(this).hasClass("reserve")) {
                     var tr = this.parentNode.parentNode;
-                    document.getElementById("mDestination").innerHTML = tr.cells[0].childNodes[0].data;
-                    document.getElementById("mPrice").innerHTML = tr.cells[3].childNodes[0].data;
+                    var grad = tr.cells[0].childNodes[0].data;
+                    document.getElementById("mDestination").innerHTML = grad;
+                    var unetaCena = tr.cells[3].childNodes[0].data;
+                    document.getElementById("mPrice").innerHTML = unetaCena;
+                    var cena = parseInt(unetaCena);
                     $("#modalUnos").modal('toggle');
                     $("#forma").validate({
                         rules: {
@@ -286,12 +300,7 @@
                             mejl: "required",
                             jmbg: {
                                 required: true,
-                                minlength: 13,
-                                maxlength: 13,
-                                amount: {
-                                    required: true,
-                                    digits: true
-                                }
+                                minlength: 13
                             }
                         },
                         messages: {
@@ -306,19 +315,16 @@
                             mejl: "Unesite validan email",
                             jmbg: {
                                 required: "Unesite jmbg",
-                                minlength: "Mora imati tacno 13 cifara",
-                                maxlength: "Mora imati tacno 13 cifara",
-                                amount: "Morate uneti samo brojeve"
+                                minlength: "Mora imati tacno 13 cifara"
                             }
                         },
                         submitHandler: function () {
                             var unesenoIme = $("#name").val();
                             var unesenoPrezime = $("#surname").val();
                             var uneseniMail = $("#mejl").val();
-                            var uneseniJmbg = $("jmgb").val();
+                            var uneseniJmbg = $("#jmbg").val();
                             var uneseniNote = $("#note").val();
-                            var unos = { name: unesenoIme, surname: unesenoPrezime, mejl: uneseniMail, jmbg: uneseniJmbg, note: uneseniNote };
-
+                            var unos = { name: unesenoIme, surname: unesenoPrezime, mejl: uneseniMail, destination: grad, price: cena, jmbg: uneseniJmbg, note: uneseniNote };
                             var zahtev = $.ajax({
                                 type: 'POST',
                                 url: "http://localhost:3000/reservations",
@@ -326,20 +332,20 @@
                                 success: function (noviPodatak) {
                                     $("#tabelaReserve tbody").append('<tr><td>' + noviPodatak.name + '</td><td>'
                                         + noviPodatak.surname + '</td><td>' + noviPodatak.mejl + '</td><td>'
-                                        + "destination" + '</td><td>' + "price" + '</td><td>' + noviPodatak.note + '</td><td><button id="' +
+                                        + noviPodatak.destination + '</td><td>' + noviPodatak.price + '</td><td>' + noviPodatak.note + '</td><td><button id="' +
                                         noviPodatak.id + '" class="btn btn-outline-secondary change" style="border-color: #f2a463;">Change Reservation</button></td><td><button id="' +
-                                        noviPodatak.id + '" class="btn btn-outline-secondary delete" style="border-color: #f2a463;">Delete reservation</button></td></tr>');
+                                        noviPodatak.id + '" class="btn btn-outline-secondary remove" style="border-color: #f2a463;">Delete reservation</button></td></tr>');
                                 },
                                 error: function () {
                                     alert("error");
                                 }
                             });
+                            $('#modalUnos').modal('close');
                         }
                     });
                 }
             });
         });
-
         $(document).ready(function () {
             $("#tabelaReserve tbody").on('click', 'button', function () {
                 if ($(this).hasClass("remove")) {
@@ -355,14 +361,29 @@
                         }
                     });
                     $(this).parent().parent().remove();
+                    $(document).ajaxStop(function () {
+                        window.location.reload();
+                    });
                 } else if ($(this).hasClass("change")) {
                     $('#modalUnos').modal('toggle');
                     var btnThis = $(this);
-                    var tr = this.parentNode.parentNode;
-                    $("#name").attr("placeholder", tr.cells[0].childNodes[0].data);
-                    $("#surname").attr("placeholder", tr.cells[1].childNodes[0].data);
-                    $("#mejl").attr("placeholder", tr.cells[2].childNodes[0].data);
-                    $("#note").attr("placeholder", tr.cells[5].childNodes[0].data);
+                    var cena;
+                    var destinacija;
+
+                    var getReservationById = $.ajax({
+                        type: "GET",
+                        url: "http://localhost:3000/reservations/" + $(this).attr("id"),
+                    });
+                    getReservationById.done(function (podatak) {
+                        $("#name").val(podatak.name);
+                        $("#surname").val(podatak.surname);
+                        $("#mejl").val(podatak.mejl);
+                        $("#note").val(podatak.note);
+                        document.getElementById("mDestination").innerHTML = podatak.destination;
+                        document.getElementById("mPrice").innerHTML = podatak.price;
+                        cena = podatak.price;
+                        destinacija = podatak.destination;
+                    });
                     $("#forma").validate({
                         rules: {
                             name: {
@@ -400,47 +421,27 @@
                             var unesenoIme = $("#name").val();
                             var unesenoPrezime = $("#surname").val();
                             var uneseniMail = $("#mejl").val();
-                            var uneseniJmbg = $("jmgb").val();
+                            var uneseniJmbg = $("#jmbg").val();
                             var uneseniNote = $("#note").val();
-                            var unos = { name: unesenoIme, surname: unesenoPrezime, mejl: uneseniMail, jmbg: uneseniJmbg, note: uneseniNote };
-
+                            var unos = { name: unesenoIme, surname: unesenoPrezime, mejl: uneseniMail, destination: destinacija, price: cena, jmbg: uneseniJmbg, note: uneseniNote };
                             $.ajax({
                                 url: "http://localhost:3000/reservations/" + btnThis.attr("id"),
                                 type: 'PUT',
                                 data: unos,
                                 success: function (noviPodatak) {
-                                    var get = $.ajax({
-                                        type: "GET",
-                                        url: "http://localhost:3000/reservations"
-                                    });
-                                    get.done(function (podaci) {
-                                        $("#tabelaReserve tbody").empty();
-                                        $.each(podaci, function (i, noviPodatak) {
-                                            $("#tabelaReserve tbody").append('<tr><td>' + noviPodatak.name + '</td><td>'
-                                                + noviPodatak.surname + '</td><td>' + noviPodatak.mejl + '</td><td>'
-                                                + "dest " + '</td><td>' + "price " + '</td><td>' + noviPodatak.note + '</td><td><button id="' +
-                                                noviPodatak.id + '" class="btn btn-outline-secondary change" style="border-color: #f2a463;">Change Reservation</button></td><td><button id="' +
-                                                noviPodatak.id + '" class="btn btn-outline-secondary delete" style="border-color: #f2a463;">Delete reservation</button></td></tr>');
-                                        });
-                                        $("#tabelaReserve tbody").dataTable();
-                                    });
-                                    get.fail(function (podaci) {
-                                        alert(podaci.statusText);
-                                    });
                                 }
                             });
-                            $('#modalUnos').modal('toggle');
+                            $('#modalUnos').modal('close');
                         }
                     });
                     $("#forma").trigger('reset');
                 }
             });
         });
-
         function showRes() {
             $('#destCont').hide();
             $('#resCont').show();
-        }       
+        }
     </script>
 </body>
 

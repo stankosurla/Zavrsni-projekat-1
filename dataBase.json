@@ -45,30 +45,33 @@
   ],
   "reservations": [
     {
-      "name": "Petar",
-      "surname": "Petrovic",
-      "mejl": "petarpetrovic@gmail.com",
-      "destination": "London",
-      "price": 950,
-      "note": "I want to see both old and new",
+      "name": "Jovana",
+      "surname": "Jovanovic",
+      "mejl": "jjovanovic@gmail.com",
+      "destination": "Paris",
+      "price": "750",
+      "jmbg": "1326154253268",
+      "note": "Eiffel Tower",
       "id": 1
     },
     {
       "name": "Nikola",
       "surname": "Nikolic",
-      "mejl": "nikolanikolic@gmail.com",
+      "mejl": "nnikolic@gmail.com",
       "destination": "Venice",
-      "price": 550,
-      "note": "Tour on gondolas",
+      "price": "550",
+      "jmbg": "6253149542531",
+      "note": "Gondolas",
       "id": 2
     },
     {
-      "name": "Jovana",
-      "surname": "Jovanovic",
-      "mejl": "jovanajovanovic@gmail.com",
-      "destination": "Paris",
-      "price": 750,
-      "note": "Eiffel Tower",
+      "name": "Petar",
+      "surname": "Petrovic",
+      "mejl": "ppetrovic@gmail.com",
+      "destination": "London",
+      "price": "950",
+      "jmbg": "4563652144563",
+      "note": "Buckingham Palace",
       "id": 3
     }
   ]
